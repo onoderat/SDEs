@@ -1,5 +1,3 @@
-using SDEs
-using Base.Test
+#include all of the test files.
 
-# write your own tests here
-@test 1 == 2
+include("EM_test.jl")

@@ -1,5 +1,11 @@
+#__precompile__()
 module SDEs
 
-# package code goes here
+include("noises.jl")
+include("callbacks.jl")
+include("explicitEM.jl")
+
+export explicitEM
+export pcEuler
 
 end # module
