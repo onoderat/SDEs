@@ -8,11 +8,11 @@ function default_rng(seed)
 end
 
 """
-arguments
+Arguments
 T : Noise Type
 m : Specifies the number of noise channels
 
-keyword arguments
+Keyword arguments
 seed: There is another more convenient constructor that given a seed instantiates a RNG using the deault_rng function.
 """
 struct Noise

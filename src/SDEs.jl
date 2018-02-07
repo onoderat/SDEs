@@ -3,9 +3,14 @@ module SDEs
 
 include("noises.jl")
 include("callbacks.jl")
+include("solvers.jl")
 include("explicitEM.jl")
+include("pcEuler.jl")
 
-export explicitEM
-export pcEuler
+export Solver
+export EM
+export PCE
+export default_seed
+export integrate
 
 end # module
