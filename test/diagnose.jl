@@ -2,18 +2,24 @@ using SDEs, Base.Test
 include("setup.jl")
 include("testutils.jl")
 include("test.jl")
-include("test_diffeq.jl")
+#include("test_diffeq.jl")
 
 ##
 x1, W1 = integrate(prob, x0, t, EM(), 1)
 x2, W2 = integrate(prob, x0, t, PCE(), 1; θ=0.)
+#x3, W3 = integrate(prob, x0, t, DEQEM(), 1)
+
+
+(x2-x1)[end]
 
 ##
 using PyPlot
-plot(t, x1-x2)
+plot(t, x1)
+plot(t, x2)
+plot(t, x3)
 
 ##
 figure()
-plot(t, W_EM-W_pc)
+plot(t, W1-W2)
 
 ##

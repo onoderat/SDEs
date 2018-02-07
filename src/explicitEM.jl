@@ -12,7 +12,7 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
     noise::Noise, em::EM, callback::Function) where {T<:Number}
     W = W0(noise)
     x = copy(x0)
-    
+
     n = length(x0)
     fΔt = Vector{T}(n)
     g = Matrix{T}(n, noise.m)
@@ -27,12 +27,13 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
 
         a!(t[i], x, fΔt)
         fΔt .*= Δt
-        x .+= fΔt
 
         randn!(noise, ΔW)
         ΔW .*= sqrt(Δt)
         b!(t[i], x, g)
         A_mul_B!(gΔW, g, ΔW) #This line performs better than the more readable version!
+
+        x .+= fΔt
         x .+= gΔW
         W .+= ΔW
         callback(t, x, W)

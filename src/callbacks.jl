@@ -1,4 +1,4 @@
-# Defines a set of standard callback functions 
+# Defines a set of standard callback functions
 
 """
 Default callback function that stores x & W of the simulations.
