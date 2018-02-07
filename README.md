@@ -1,5 +1,14 @@
 # SDEs
 
+Barebones library to simulate SDEs. 
+
+Solvers currently supported
+
+1. Euler Maruyama
+2. Predictor Corrector Euler
+
+See ipython notebook benchmark to see the performance of the predictor corrector euler algorithm.
+
 [![Build Status](https://travis-ci.org/onoderat/SDEs.jl.svg?branch=master)](https://travis-ci.org/onoderat/SDEs.jl)
 
 [![Coverage Status](https://coveralls.io/repos/onoderat/SDEs.jl/badge.svg?branch=master&service=github)](https://coveralls.io/github/onoderat/SDEs.jl?branch=master)
