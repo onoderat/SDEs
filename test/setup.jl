@@ -6,4 +6,4 @@ const prob = Problem31(avec)
 
 #Must be between -1 and 1!
 const x0 = [-0.5]#, 0.5, 0.3, -0.2, 0.7, 0.85, 0.0, -0.3, -0.34, 0.62]
-const t = linspace(0., 1., 101)
+const t = linspace(0., 1., 5001)

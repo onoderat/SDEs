@@ -5,18 +5,19 @@ include("test.jl")
 
 Ncheck = 1000
 tolerance = 2/sqrt(Ncheck) #CLT
-
-##Running the checks for this package
-println("dt:", t[2]-t[1])
-EMdev = check(prob, x0, t, EM(), 1:Ncheck)
-println("Our EM deviations is   ", EMdev)
-
 θ=0.5
 η=0.5
 
+println(prob, ", dt:", t[2]-t[1], ", θ:",θ, ", η:",η)
+
+EMPdev = check(prob, x0, t, SDEs.EMproto(), 1:Ncheck)
+println("proto EM  :", EMPdev)
+EMdev = check(prob, x0, t, EM(), 1:Ncheck)
+println("EM        :", EMdev)
+PCEPdev = check(prob, x0, t, SDEs.PCEproto(), 1:Ncheck; θ=θ, η=η)
+println("proto PCE :", PCEPdev)
 PCEdev = check(prob, x0, t, PCE(), 1:Ncheck; θ=θ, η=η)
-println("θ:",θ, "   η:",η)
-println("PCE deviations is      ", PCEdev)
+println("PCE       :", PCEdev)
 
 ##Run DiffEq here to compare the deviation.
 # include("test_diffeq.jl")

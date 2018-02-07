@@ -1,7 +1,5 @@
 # Define the solver type
 abstract type Solver end
-struct EM <: Solver end
-struct PCE <: Solver end
 
 function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::AbstractVector{<:Real}, solver::Solver, m::Int, seed::Integer;
                 params...) where {T<:Number}
