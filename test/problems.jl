@@ -22,6 +22,12 @@ function b!(prob::Problem31)
     end
 end
 
+function bbp!(prob::Problem31)
+    return function (t, x, bbp)
+        bbp .= (prob.avec.^2).*(1-x.^2).*(-2x)
+    end
+end
+
 function solution(prob::Problem31, x0, t, Wvec)
     avec = prob.avec
     return [tanh.(avec.*W+atanh.(x0)) for W in Wvec]

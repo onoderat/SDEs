@@ -24,13 +24,13 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
 
     for i in 1:length(t)-1
         Δt = t[i+1]-t[i]
-
-        a!(t[i], x, fΔt)
-        fΔt .*= Δt
-
         randn!(noise, ΔW)
         ΔW .*= sqrt(Δt)
+
+        a!(t[i], x, fΔt)
         b!(t[i], x, g)
+
+        fΔt .*= Δt
         A_mul_B!(gΔW, g, ΔW) #This line performs better than the more readable version!
 
         x .+= fΔt

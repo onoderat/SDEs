@@ -4,7 +4,11 @@
 import SDEs:integrate
 
 function integrate(prob::Problem, x0::AbstractVector, t::AbstractVector, solver::Solver, seed::Integer; params...)
-    return integrate(a!(prob), b!(prob), x0, t, solver::Solver, mgen(prob, x0), seed; params...)
+    return integrate(a!(prob), b!(prob), x0, t, solver, mgen(prob, x0), seed; params...)
+end
+
+function integrate(prob::Problem, x0::AbstractVector, t::AbstractVector, pce::PCE, seed::Integer; params...)
+    return integrate(a!(prob), b!(prob), x0, t, pce, mgen(prob, x0), seed; bbprime! = bbp!(prob), params...)
 end
 
 function test(prob::Problem, x0::AbstractVector, t::AbstractVector, solver::Solver, seed::Integer; params...)
