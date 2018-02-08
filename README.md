@@ -7,7 +7,7 @@ Solvers currently supported
 1. Euler Maruyama
 2. Predictor Corrector Euler - Stochastics and Dynamics, Vol. 8, No. 3 (2008) 561–581
 
-See ipython notebook benchmark to see the performance of the predictor corrector euler algorithm.
+See [ipython notebook](https://github.com/onoderat/SDEs.jl/blob/master/benchmark/Benchmark%20PCE%20%26%20EM.ipynb) benchmark to see the performance of the predictor corrector euler algorithm.
 
 Current plan is to use this package as a test bed to learn how to code up these equations before incoorporating these algorithms into [DifferentialEquations.jl](http://docs.juliadiffeq.org/stable/)
 
