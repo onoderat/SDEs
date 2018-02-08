@@ -1,3 +1,3 @@
 #include all of the test files.
 
-include("EM_test.jl")
+@time begin include("test_deviations.jl") end

@@ -1,0 +1,6 @@
+Problem31([0.8, 0.4, 0.9, 0.4, 0.2, 0.21, 0.6, 0.43, 0.21, -0.1]), dt:0.0002, θ:0.5, η:0.5
+EM proto  :  4.893 ms (70053 allocations: 14.45 MiB)
+EM        :  3.904 ms (40054 allocations: 9.87 MiB)
+Diffeq EM :  4.044 ms (40493 allocations: 10.21 MiB)
+PCE proto :  19.869 ms (175095 allocations: 44.51 MiB)
+PCE       :  11.992 ms (95095 allocations: 21.78 MiB)

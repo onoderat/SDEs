@@ -5,6 +5,14 @@
 struct PCEproto <: Solver end
 struct PCE <: Solver end
 
+"""
+optimized predictor corrector integrate
+ab! : bias & diffusion function
+x0 : Initial state
+t : times to use for time evolution
+noise : Noise object
+callback : a function that runs on t, x, W
+"""
 function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::AbstractVector{<:Real},
     noise::Noise, pce::PCEproto, callback::Function; θ::Float64=0.5, η::Float64 = 0., bbprime!::Function = (t,x,bbp)-> nothing) where {T<:Number}
 
@@ -14,10 +22,9 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
     function abar!(t, x, ff)
         a!(t, x, ff)
         bbprime!(t, x, bbp)
-        ff .-= η*bbp
+        ff .= ff - η*bbp
         return nothing
     end
-
     W = W0(noise)
     ΔW = copy(W)
     x = copy(x0)
@@ -45,18 +52,11 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
         b!(t[i+1], xbar, gbar)
 
         x .+= (θ*fbar + (1-θ)*f)*Δt + (η*gbar + (1-η)*g)*ΔW
+        W .+= ΔW
         callback(t, x, W)
     end
 end
 
-"""
-optimized predictor corrector integrate
-ab! : bias & diffusion function
-x0 : Initial state
-t : times to use for time evolution
-noise : Noise object
-callback : a function that runs on t, x, W
-"""
 function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::AbstractVector{<:Real},
     noise::Noise, pce::PCE, callback::Function; θ::Float64=0.5, η::Float64 = 0., bbprime!::Function = (t,x,bbp)-> nothing) where {T<:Number}
 
@@ -81,9 +81,6 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
     gΔW = Vector{T}(n)
 
     xbar = copy(x)
-    fΔtbar = copy(fΔt)
-    gbar = copy(g)
-    gΔWbar = Vector{T}(n)
 
     #save the first data point
     callback(t[1], x, W)
@@ -103,20 +100,19 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
         xbar .+= fΔt
         xbar .+= gΔW
 
-        abar!(t[i+1], xbar, fΔtbar)
-        b!(t[i+1], xbar, gbar)
+        fΔt .*= (1-θ)
+        gΔW .*= (1-η)
 
-        fΔtbar .*= Δt
-        A_mul_B!(gΔWbar, gbar, ΔW)
-
-        fΔtbar .*= θ
-        fΔt .*= 1-θ
-        gΔWbar .*= η
-        gΔW .*= 1-η
-
-        x .+= fΔtbar
         x .+= fΔt
-        x .+= gΔWbar
+        x .+= gΔW
+
+        abar!(t[i+1], xbar, fΔt)
+        b!(t[i+1], xbar, g)
+
+        fΔt .*= (Δt*θ) #fΔbar*θ
+        A_mul_B!(gΔW, g, ΔW)
+        gΔW .*= η #gbar*η
+        x .+= fΔt
         x .+= gΔW
 
         W .+= ΔW

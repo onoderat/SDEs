@@ -23,8 +23,23 @@ function b!(prob::Problem31)
 end
 
 function bbp!(prob::Problem31)
+    coeff = -2*prob.avec.^2
     return function (t, x, bbp)
-        bbp .= (prob.avec.^2).*(1-x.^2).*(-2x)
+        bbp .= coeff.*(x-x.^3)
+    end
+end
+
+#Diffeq has a different convention from v4.0
+function diffeq_a!(prob::Problem31)
+    coeff = -prob.avec.^2
+    return function (t, x, p, f)
+        f .= coeff.*(x.*(1-x.^2))
+    end
+end
+
+function diffeq_b!(prob::Problem31)
+    return function (t, x, p, g)
+        g .= diagm(prob.avec.*(1-x.^2))
     end
 end
 

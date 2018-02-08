@@ -1,7 +1,6 @@
 using SDEs, Base.Test
 include("setup.jl")
 include("testutils.jl")
-include("test.jl")
 #include("test_diffeq.jl")
 
 ##

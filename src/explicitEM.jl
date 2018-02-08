@@ -18,13 +18,13 @@ function integrate(a!::Function, b!::Function, x0::AbstractVector{T}, t::Abstrac
     for i in 1:length(t)-1
         Δt = t[i+1]-t[i]
         randn!(noise, ΔW)
-        ΔW .*= sqrt(Δt)
+        ΔW = ΔW*sqrt(Δt)
 
         a!(t[i], x, f)
         b!(t[i], x, g)
 
-        x .+= f*Δt + g*ΔW
-        W .+= ΔW
+        x .= x + f*Δt + g*ΔW
+        W .= W + ΔW
         callback(t, x, W)
     end
     return nothing
