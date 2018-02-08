@@ -5,7 +5,7 @@ Barebones library to simulate SDEs.
 Solvers currently supported
 
 1. Euler Maruyama
-2. Predictor Corrector Euler
+2. Predictor Corrector Euler - Stochastics and Dynamics, Vol. 8, No. 3 (2008) 561–581
 
 See ipython notebook benchmark to see the performance of the predictor corrector euler algorithm.
 
